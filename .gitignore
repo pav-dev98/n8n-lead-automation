@@ -1,0 +1,9 @@
+# n8n local files
+.n8n/
+Dockerfile.*
+*.log
+node_modules/
+.env
+.env.local
+.env.*
+credentials/*.json   # si tienes secrets, NO commitees las creds reales
