@@ -1,0 +1,120 @@
+{
+  "name": "SupabaseLeadThankYou",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "97fdc2a1-0606-46a9-ba22-d112c618c53d",
+      "name": "Webhook",
+      "webhookId": "0782d4ab-aa5d-440b-a1b2-383140bb3095"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1fa29342-5059-4c28-9fdf-091cd0b44594",
+              "name": "nombre",
+              "value": "={{ $json.body.record.full_name }}",
+              "type": "string"
+            },
+            {
+              "id": "5bb837f1-a17b-4bae-96d0-8837bb40edec",
+              "name": "email",
+              "value": "={{ $json.body.record.email }}",
+              "type": "string"
+            },
+            {
+              "id": "be9b14bb-322e-4b6d-9505-53468feff9fd",
+              "name": "producto",
+              "value": "={{ $json.body.record.interested_grade.join(\",\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        192,
+        0
+      ],
+      "id": "5590b53b-94aa-48ad-b802-afc2a7b61971",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "=!gracias por tu interes en nuestra amazonita!",
+        "emailType": "text",
+        "message": "=Hola {{ $json.nombre }} gracias por interes en nuestra amazonita te estaremos contactando en los proximos minutos para poder conversar acerca de los grados({{ $json.producto }}) de su interes , tenga un bonito dia de parte de blueamazoniteperu.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "ba3a9f5c-4ccf-4e81-a791-db88fa9f8b19",
+      "name": "Send a message",
+      "webhookId": "f7618329-25cf-4204-822d-4625bde6eb93",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jmEvRco0pwX3TZpn",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d0a7e34b-d3c5-477a-896a-69d663536878",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f52b4abe2252b5a2f412efab1a397910b7f9436e4fd99a24d5fa58612496ef70"
+  },
+  "id": "xmTcMEEPsOX7sOUf",
+  "tags": []
+}
